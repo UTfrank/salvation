@@ -13,15 +13,37 @@ $(document).ready(function() {
         obj.email = _('email').value;
         obj.password = _('password').value;
 
+        console.log(`${obj}`);
+
         $.ajax({
             url: 'https://us-central1-grantie-2b757.cloudfunctions.net/loginUser',
-            headers: { 'Access-Control-Allow-Origin': 'htt://site allowed to access' },
+            headers: { 'Access-Control-Allow-Origin': 'http://127.0.0.1:8080' },
             method: 'POST',
             dataType: 'json',
+            data: {
+                "email": obj.email,
+                "password": obj.password
+            }
         }).done(function(data) {
             console.log(data);
+            localStorage.setItem('userToken', data.token);
+            window.location.replace("/dashboard.html")
         }).fail(function(err) {
             console.log(err);
+        })
+    })
+
+    //Logout
+    $('#logout').click(function(event) {
+        event.preventDefault();
+        $.ajax({
+            url: 'https://us-central1-grantie-2b757.cloudfunctions.net/loginOutUser',
+            method: 'GET',
+        }).done(function(data) {
+            console.log(data);
+            window.location.replace("/index.html")
+        }).fail(function(err) {
+            console.log("Something went wrong!")
         })
     })
 
