@@ -41,7 +41,8 @@ $(document).ready(function() {
             method: 'GET',
         }).done(function(data) {
             console.log(data);
-            window.location.replace("/index.html")
+            localStorage.removeItem('userToken');
+            window.location.replace("/index.html");
         }).fail(function(err) {
             console.log("Something went wrong!")
         })
